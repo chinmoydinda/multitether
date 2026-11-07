@@ -63,6 +63,8 @@ struct StateMachineConfig {
   std::uint32_t response_poll_interval_millis = 40;
 
   std::uint32_t keepalive_failure_threshold = 3;
+
+  bool send_halt_on_stop = true;
 };
 
 class StateMachineObserver {

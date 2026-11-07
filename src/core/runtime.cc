@@ -100,6 +100,10 @@ Status Runtime::RunStartSequence() {
 
   rndis::StateMachineConfig rndis_config = config_.rndis;
   rndis_config.requested_mtu = config_.mtu;
+  // Clearing OID_GEN_CURRENT_PACKET_FILTER=0 on stop silences packet delivery
+  // without sending REMOTE_NDIS_HALT_MSG, which on Samsung / Qualcomm GSI RNDIS
+  // gadgets tears down the device's bulk OUT DMA queue until physical replug.
+  rndis_config.send_halt_on_stop = false;
   state_machine_ = std::make_unique<rndis::StateMachine>(*control_channel_, *this, rndis_config);
 
   MULTITETHER_RETURN_IF_ERROR(state_machine_->Start());
@@ -199,6 +203,18 @@ void Runtime::Teardown() {
   MULTITETHER_INFO_TR(Msg::kCoreStopping);
 
   if (bridge_ != nullptr) {
+    bridge_->SetPaused(true);
+  }
+
+  // Clear the RNDIS packet filter and halt the state machine while the USB bulk
+  // pipes are still open so the phone's gadget driver stops DMA cleanly before
+  // host transfers are aborted.
+  if (state_machine_ != nullptr) {
+    state_machine_->Stop();
+    state_machine_.reset();
+  }
+
+  if (bridge_ != nullptr) {
     bridge_->Stop();
     bridge_.reset();
   }
@@ -207,11 +223,6 @@ void Runtime::Teardown() {
   bpf_link_.reset();
 
   feth_pair_.reset();
-
-  if (state_machine_ != nullptr) {
-    state_machine_->Stop();
-    state_machine_.reset();
-  }
 
   if (control_channel_ != nullptr) {
     control_channel_->StopNotificationListener();

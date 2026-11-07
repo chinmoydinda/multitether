@@ -267,6 +267,14 @@ Result<std::unique_ptr<Device>> Device::Open(const Context& context,
 
   MULTITETHER_RETURN_IF_ERROR(device->ResolveEndpoints(*config));
 
+  // Clear endpoint stalls and reset host/device DATA0 toggles on open without
+  // issuing SET_INTERFACE (which would call gether_disconnect on mainline u_ether).
+  (void)device->ClearHalt(device->bulk_in_endpoint_);
+  (void)device->ClearHalt(device->bulk_out_endpoint_);
+  if (device->interrupt_in_endpoint_ != 0) {
+    (void)device->ClearHalt(device->interrupt_in_endpoint_);
+  }
+
   MULTITETHER_INFO_TR(Msg::kUsbClaimed, device->description_, device->SpeedName(),
                     device->bulk_in_endpoint_, device->bulk_out_endpoint_,
                     device->bulk_max_packet_size_,
@@ -283,9 +291,18 @@ Device::~Device() {
   }
 
   if (data_interface_claimed_) {
+    if (bulk_in_endpoint_ != 0) {
+      (void)ClearHalt(bulk_in_endpoint_);
+    }
+    if (bulk_out_endpoint_ != 0) {
+      (void)ClearHalt(bulk_out_endpoint_);
+    }
     ::libusb_release_interface(handle_, candidate_.data_interface);
   }
   if (control_interface_claimed_) {
+    if (interrupt_in_endpoint_ != 0) {
+      (void)ClearHalt(interrupt_in_endpoint_);
+    }
     ::libusb_release_interface(handle_, candidate_.control_interface);
   }
   ::libusb_close(handle_);
@@ -368,6 +385,19 @@ Status Device::ClearHalt(std::uint8_t endpoint) {
   return Ok();
 }
 
+void Device::ResetDataEndpoints() noexcept {
+  if (handle_ == nullptr) {
+    return;
+  }
+  (void)::libusb_set_interface_alt_setting(handle_, candidate_.data_interface, 0);
+  if (bulk_in_endpoint_ != 0) {
+    (void)ClearHalt(bulk_in_endpoint_);
+  }
+  if (bulk_out_endpoint_ != 0) {
+    (void)ClearHalt(bulk_out_endpoint_);
+  }
+}
+
 // =============================================================================
 // UsbControlChannel
 // =============================================================================
@@ -389,6 +419,19 @@ UsbControlChannel::~UsbControlChannel() {
 }
 
 Status UsbControlChannel::StartNotificationListener() {
+  // Drain any stale encapsulated responses queued in the gadget's control FIFO
+  // from an earlier session before starting a fresh RNDIS handshake.
+  for (int i = 0; i < 4; ++i) {
+    const int drained = ::libusb_control_transfer(
+        device_->Handle(), rndis::kControlInRequestType, rndis::kRequestGetEncapsulatedResponse,
+        /*wValue=*/0, device_->Candidate().control_interface,
+        reinterpret_cast<unsigned char*>(response_buffer_.data()),
+        static_cast<std::uint16_t>(response_buffer_.size()), /*timeout=*/25);
+    if (drained < static_cast<int>(rndis::kMessageHeaderBytes)) {
+      break;
+    }
+  }
+
   if (device_->InterruptInEndpoint() == 0) {
     MULTITETHER_DEBUG_TR(Msg::kUsbNoInterruptEndpoint);
     return Ok();

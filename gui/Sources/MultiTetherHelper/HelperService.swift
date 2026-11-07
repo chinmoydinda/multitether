@@ -50,6 +50,11 @@ final class HelperService: NSObject, MultiTetherHelperProtocol {
         do { decoded = try JSONDecoder().decode(SessionConfiguration.self, from: configuration) }
         catch { reply(L(.helperRequestDecodeFailed, error.localizedDescription)); return }
         lifecycleQueue.async {
+            if let existing = self.sessions.snapshots().first(where: { $0.id == decoded.deviceID }),
+               existing.status.runState == .failed || existing.status.runState == .stopped,
+               !existing.status.systemInterface.isEmpty {
+                self.dhcp.stop(interface: existing.status.systemInterface)
+            }
             do { try self.sessions.start(configuration: decoded); reply(nil) }
             catch { reply(error.localizedDescription) }
         }

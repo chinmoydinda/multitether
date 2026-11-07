@@ -559,7 +559,9 @@ void StateMachine::Stop() {
     }
   }
 
-  SendHalt();
+  if (config_.send_halt_on_stop) {
+    SendHalt();
+  }
   TransitionTo(State::kUninitialized);
 }
 }  // namespace multitether::rndis

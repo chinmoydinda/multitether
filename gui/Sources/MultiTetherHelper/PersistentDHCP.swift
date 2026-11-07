@@ -44,10 +44,9 @@ final class PersistentDHCP {
         guard let api else { throw Failure.message(L(.mtPersistentDHCPUnavailable)) }
         try ensureUp(driverInterface)
         try ensureUp(interface)
-        if let service = services[interface] {
-            api.refresh(service.handle)
-            return
-        }
+        // Recreate any existing service handle so Retry after a link-local
+        // fallback or recreated feth interface starts a fresh DHCP DISCOVER burst.
+        services.removeValue(forKey: interface)
         // NoPublish=false asks IPConfiguration itself to publish the service's
         // IPv4/DNS state. This is not a fabricated SCDynamicStore-only service.
         let options: [String: Any] = [
@@ -66,6 +65,7 @@ final class PersistentDHCP {
         // service. Raising it again lets the initial DHCP exchange actually flow.
         try ensureUp(driverInterface)
         try ensureUp(interface)
+        api.refresh(handle)
     }
 
     func stop(interface: String) { services.removeValue(forKey: interface) }
