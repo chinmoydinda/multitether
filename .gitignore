@@ -1,0 +1,16 @@
+build*/
+dist/
+.cache/
+.test-build/
+.swiftpm/
+gui/.build/
+gui/.swiftpm/
+xcuserdata/
+*.xcworkspace
+*.xcodeproj
+*.dSYM/
+.vscode/
+.idea/
+*.log
+compile_commands.json
+.DS_Store

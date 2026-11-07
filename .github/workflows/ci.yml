@@ -1,0 +1,27 @@
+name: Build and Test
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  validate:
+    runs-on: macos-26
+    steps:
+      - uses: actions/checkout@v5
+      - name: Install libusb
+        run: brew install libusb
+      - name: Configure backend tests
+        run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DMULTITETHER_BUILD_TESTS=ON -DMULTITETHER_WARNINGS_AS_ERRORS=ON
+      - name: Build backend
+        run: cmake --build build -j6
+      - name: Test backend
+        run: ctest --test-dir build --output-on-failure
+      - name: Test shared Swift logic
+        run: swift test --package-path gui
+      - name: Build and verify app bundle
+        run: ./gui/Scripts/build-gui.sh

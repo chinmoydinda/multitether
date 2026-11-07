@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+  "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>CFBundleName</key>
+    <string>MultiTether</string>
+    <key>CFBundleDisplayName</key>
+    <string>MultiTether</string>
+    <key>CFBundleIdentifier</key>
+    <string>com.multitether</string>
+    <key>CFBundleExecutable</key>
+    <string>MultiTether</string>
+    <key>CFBundlePackageType</key>
+    <string>APPL</string>
+    <key>CFBundleIconFile</key>
+    <string>MultiTetherIcon.icns</string>
+    <key>CFBundleShortVersionString</key>
+    <string>__MULTITETHER_VERSION__</string>
+    <key>CFBundleVersion</key>
+    <string>__MULTITETHER_VERSION__</string>
+    <key>CFBundleDevelopmentRegion</key>
+    <string>en</string>
+    <key>CFBundleLocalizations</key>
+    <array>
+        <string>en</string>
+    </array>
+    <key>LSMinimumSystemVersion</key>
+    <string>27.0</string>
+    <key>NSHighResolutionCapable</key>
+    <true/>
+    <key>LSUIElement</key>
+    <true/>
+    <key>NSSupportsAutomaticTermination</key>
+    <false/>
+    <key>NSSupportsSuddenTermination</key>
+    <false/>
+</dict>
+</plist>

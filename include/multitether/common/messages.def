@@ -1,0 +1,313 @@
+// English control-path messages. No allocation is permitted on the data path.
+MULTITETHER_MESSAGE(kCommonLogFormatFailed, "<log formatting failed>")
+MULTITETHER_MESSAGE(kCommonThreadQosFailed, "failed to set thread QoS (qos={}, rc={}); falling back to the default "
+                  "scheduling policy")
+MULTITETHER_MESSAGE(kNetLoopbackInjectedFailure, "loopback backend failed on write #{} as configured by the test")
+MULTITETHER_MESSAGE(kNetInterfaceNameTooLong, "interface name \"{}\" is too long")
+MULTITETHER_MESSAGE(kNetInterfaceNameOverLimit, "interface name \"{}\" exceeds the {}-byte limit")
+MULTITETHER_MESSAGE(kNetSysctlReadFailed, "failed to read sysctl {}")
+MULTITETHER_MESSAGE(kNetUnknownValue, "unknown")
+MULTITETHER_MESSAGE(kNetOptionalIoctlUnavailable, "optional ioctl {} is unavailable (errno={}); skipped")
+MULTITETHER_MESSAGE(kNetFrameLimitBelowMinimum, "max_frame_bytes={} is smaller than the minimum Ethernet frame length {}")
+MULTITETHER_MESSAGE(kNetBpfOpenDenied, "permission denied opening {}. /dev/bpf* is 0600 root:wheel and macOS has no "
+                  "equivalent of FreeBSD's access_bpf group, so this must run as root")
+MULTITETHER_MESSAGE(kNetBpfNoDeviceAvailable, "no usable /dev/bpf* device found (all busy, or insufficient permissions)")
+MULTITETHER_MESSAGE(kNetBpfBufferClamped, "the kernel clamped the BPF buffer from the requested {} bytes to {} bytes "
+                  "(limited by sysctl debug.bpf_bufsize_cap)")
+MULTITETHER_MESSAGE(kNetBpfInterfaceMissing, "interface {} does not exist; cannot attach BPF")
+MULTITETHER_MESSAGE(kNetBpfBindFailed, "failed to attach BPF to {}")
+MULTITETHER_MESSAGE(kNetBpfWrongDataLinkType, "interface {} has data link type {}; this driver only supports Ethernet "
+                  "(DLT_EN10MB={})")
+MULTITETHER_MESSAGE(kNetBpfReady, "BPF ready: {} -> {} (kernel buffer {} KiB, max frame {} bytes, batch write {}, "
+                  "timestamps {})")
+MULTITETHER_MESSAGE(kNetBpfBatchWriteEnabled, "enabled")
+MULTITETHER_MESSAGE(kNetBpfBatchWriteUnavailable, "unavailable (writing one frame at a time)")
+MULTITETHER_MESSAGE(kNetBpfTimestampDisabled, "off")
+MULTITETHER_MESSAGE(kNetBpfTimestampEnabled, "left on")
+MULTITETHER_MESSAGE(kNetBpfReadFailed, "failed to read from {}")
+MULTITETHER_MESSAGE(kNetBpfHeaderTooShort, "BPF record has bh_hdrlen={}, below the minimum of {}; discarding the rest of "
+                  "this read")
+MULTITETHER_MESSAGE(kNetBpfRecordOutOfBounds, "BPF record runs past the buffer (offset {} + {} > {}); discarding the rest")
+MULTITETHER_MESSAGE(kNetBpfSkipOversizedRecord, "skipping BPF record: caplen={} datalen={} (limit {})")
+MULTITETHER_MESSAGE(kNetBpfBatchFrameLimit, "hit the per-batch frame limit of {}; the remaining {} bytes of this read were "
+                  "dropped. Increase max_frames_per_batch")
+MULTITETHER_MESSAGE(kNetBpfWriteFailed, "failed to write a {1}-byte frame to {0}")
+MULTITETHER_MESSAGE(kNetBpfBatchWriteFailed, "failed to batch-write {1} frames ({2} bytes) to {0}")
+MULTITETHER_MESSAGE(kNetIoctlSocketFailed, "failed to create the socket used for interface ioctls")
+MULTITETHER_MESSAGE(kNetFethMaxMtuInvalid, "net.link.fake.max_mtu returned the invalid value {}")
+MULTITETHER_MESSAGE(kNetSysctlUnreadableSkipped, "sysctl {} is unreadable ({}); skipping the check")
+MULTITETHER_MESSAGE(kNetSysctlMismatch, "sysctl {0} is currently {1} but must be {2}. Reason: {3}.\n"
+                  "  feth snapshots this switch into the interface at creation time, so changing "
+                  "it afterwards has no effect. Fix it first:\n"
+                  "    sudo sysctl -w {0}={2}")
+MULTITETHER_MESSAGE(kNetSysctlWhyHwcsum, "when non-zero, IP/TCP/UDP checksums on outbound frames are placeholders left "
+                  "for hardware to compute, so the frames we read have invalid checksums")
+MULTITETHER_MESSAGE(kNetSysctlWhyFcs, "when non-zero, a 4-byte CRC is appended to each frame and would have to be "
+                  "stripped before forwarding over USB")
+MULTITETHER_MESSAGE(kNetSysctlWhyTso, "when non-zero, TSO super-packets of up to 64 KB arrive, exceeding the RNDIS "
+                  "per-frame limit")
+MULTITETHER_MESSAGE(kNetSysctlWhyLro, "when non-zero, coalesced oversized receive frames arrive")
+MULTITETHER_MESSAGE(kNetSysctlWhyTrailer, "when non-zero, frames carry extra trailing padding")
+MULTITETHER_MESSAGE(kNetSysctlWhySeparateHeader, "when non-zero, the frame header is separated from the payload, breaking the "
+                  "contiguous-memory assumption")
+MULTITETHER_MESSAGE(kNetDestroyOrphanFailed, "failed to destroy leftover virtual interface {}")
+MULTITETHER_MESSAGE(kNetDestroyedOrphan, "destroyed leftover virtual interface {}")
+MULTITETHER_MESSAGE(kNetDestroyFailed, "failed to destroy {}: {}")
+MULTITETHER_MESSAGE(kNetDestroyed, "destroyed virtual interface {}")
+MULTITETHER_MESSAGE(kNetFethCreateNeedsRoot, "creating a feth virtual interface requires root; run with sudo")
+MULTITETHER_MESSAGE(kNetInterfaceExists, "interface {} already exists; pick another name or destroy it first")
+MULTITETHER_MESSAGE(kNetFethCreateFailed, "failed to create feth virtual interface {}")
+MULTITETHER_MESSAGE(kNetCreated, "created virtual interface {}")
+MULTITETHER_MESSAGE(kNetPeerInvalidObject, "pairing failed: invalid interface object")
+MULTITETHER_MESSAGE(kNetPeerNameTooLong, "peer interface name \"{}\" is too long")
+MULTITETHER_MESSAGE(kNetPeerNeedsRoot, "pairing feth interfaces requires root; run with sudo")
+MULTITETHER_MESSAGE(kNetPeerRejected, "the kernel refused to pair {} with {}. Likely causes: one side already has a "
+                  "peer, the peer is not a feth interface, or the private if_fake ABI changed in "
+                  "this macOS version")
+MULTITETHER_MESSAGE(kNetPeerFailed, "failed to pair {} with {}")
+MULTITETHER_MESSAGE(kNetPeered, "paired {} with {}")
+MULTITETHER_MESSAGE(kNetQueryPeerInvalidObject, "peer query failed: invalid interface object")
+MULTITETHER_MESSAGE(kNetSetMtuInvalidObject, "setting the MTU failed: invalid interface object")
+MULTITETHER_MESSAGE(kNetSetMtuRejected, "refused to set the MTU of {} to {} (the feth MTU ceiling is {}, set by sysctl "
+                  "net.link.fake.max_mtu and snapshotted when the interface was created)")
+MULTITETHER_MESSAGE(kNetSetMtuFailed, "failed to set the MTU of {} to {}")
+MULTITETHER_MESSAGE(kNetSetMacInvalidObject, "setting the MAC failed: invalid interface object")
+MULTITETHER_MESSAGE(kNetSetMacNeedsRoot, "changing an interface MAC requires root; run with sudo")
+MULTITETHER_MESSAGE(kNetSetMacFailed, "failed to set the MAC of {} to {}")
+MULTITETHER_MESSAGE(kNetMacSet, "set the MAC of {} to {}")
+MULTITETHER_MESSAGE(kNetGetifaddrsFailed, "getifaddrs failed")
+MULTITETHER_MESSAGE(kNetLinkAddressWrongLength, "the link address of {} is {} bytes, not a 6-byte MAC")
+MULTITETHER_MESSAGE(kNetLinkAddressNotFound, "no link address for interface {} in the getifaddrs results")
+MULTITETHER_MESSAGE(kNetSetUpInvalidObject, "changing the interface state failed: invalid interface object")
+MULTITETHER_MESSAGE(kNetSetUpNeedsRoot, "bringing an interface up or down requires root; run with sudo")
+MULTITETHER_MESSAGE(kNetSetUpFailed, "failed to bring {} {}")
+MULTITETHER_MESSAGE(kNetFethPairNeedsRoot, "creating feth virtual interfaces requires root. Run MultiTether with sudo.")
+MULTITETHER_MESSAGE(kNetMtuExceedsFethLimit, "the requested MTU {} exceeds the feth ceiling of {} (sysctl "
+                  "net.link.fake.max_mtu)")
+MULTITETHER_MESSAGE(kNetSameMacDadConflict, "both sides have the same MAC ({}), which would trigger an IPv6 DAD address "
+                  "conflict")
+MULTITETHER_MESSAGE(kNetFethPairReady, "virtual interface pair ready: system side {} <-> driver side {} (MTU {})")
+MULTITETHER_MESSAGE(kRndisUnknownStatus, "unknown status")
+MULTITETHER_MESSAGE(kRndisUnknownMessage, "unknown message")
+MULTITETHER_MESSAGE(kRndisUnknownMessageType, "unknown message type")
+MULTITETHER_MESSAGE(kRndisUnknown, "unknown")
+MULTITETHER_MESSAGE(kRndisResponse, "a response")
+MULTITETHER_MESSAGE(kRndisStateUninitialized, "uninitialized")
+MULTITETHER_MESSAGE(kRndisStateInitializing, "initializing")
+MULTITETHER_MESSAGE(kRndisStateInitialized, "initialized")
+MULTITETHER_MESSAGE(kRndisStateDataInitialized, "data ready")
+MULTITETHER_MESSAGE(kRndisStateHalting, "halting")
+MULTITETHER_MESSAGE(kRndisStateUnknown, "unknown state")
+MULTITETHER_MESSAGE(kRndisMalformedNone, "none")
+MULTITETHER_MESSAGE(kRndisMalformedNotPacketMessage, "MessageType is not PACKET_MSG")
+MULTITETHER_MESSAGE(kRndisMalformedMessageTooShort, "MessageLength is below 44")
+MULTITETHER_MESSAGE(kRndisMalformedMessageOverruns, "MessageLength runs past the transfer")
+MULTITETHER_MESSAGE(kRndisMalformedDataOutOfBounds, "DataOffset+DataLength is out of bounds")
+MULTITETHER_MESSAGE(kRndisMalformedFrameTooShort, "DataLength is below the Ethernet header length")
+MULTITETHER_MESSAGE(kRndisMalformedFrameTooLong, "DataLength exceeds the per-frame limit")
+MULTITETHER_MESSAGE(kRndisMalformedUnknown, "unknown")
+MULTITETHER_MESSAGE(kRndisBufferTooShort, "{} is too short: need {} bytes, got {}")
+MULTITETHER_MESSAGE(kRndisEncodeBufferTooSmall, "the buffer for encoding {} is too small: need {} bytes, got {}")
+MULTITETHER_MESSAGE(kRndisUnexpectedMessageType, "expected {}, got {} ({:#010x})")
+MULTITETHER_MESSAGE(kRndisInconsistentMessageLength, "MessageLength={1} of {0} is inconsistent (buffer is {2} bytes, minimum is {3})")
+MULTITETHER_MESSAGE(kRndisInlineBufferOutOfBounds, "{} is out of bounds: offset {} (relative {}) + length {} exceeds MessageLength "
+                  "{}")
+MULTITETHER_MESSAGE(kRndisWhatMessageHeader, "the RNDIS message header")
+MULTITETHER_MESSAGE(kRndisWhatQueryCmpltInfoBuffer, "the InformationBuffer of QUERY_CMPLT")
+MULTITETHER_MESSAGE(kRndisWhatOidUint32, "the LE32 return value of an OID")
+MULTITETHER_MESSAGE(kRndisWhatOidMac, "the MAC return value of an OID")
+MULTITETHER_MESSAGE(kRndisStatusSuffix, "{}: {}")
+MULTITETHER_MESSAGE(kRndisInitRejected, "the device rejected RNDIS initialization")
+MULTITETHER_MESSAGE(kRndisUnsupportedMedium, "the device reports medium {:#x}; this driver only supports 802.3 Ethernet (0)")
+MULTITETHER_MESSAGE(kRndisConnectionOriented, "the device is connection-oriented (CONDIS); this driver only supports "
+                  "connectionless 802.3 devices")
+MULTITETHER_MESSAGE(kRndisNoConnectionlessFlag, "the device has DeviceFlags={:#x} without the CONNECTIONLESS bit; continuing as "
+                  "if it were connectionless")
+MULTITETHER_MESSAGE(kRndisUnsupportedMajorVersion, "the device reports RNDIS major version {}; this driver only implements {}")
+MULTITETHER_MESSAGE(kRndisAlignmentFactorClamped, "the device reports PacketAlignmentFactor={}, above the legal ceiling of {}; "
+                  "clamped")
+MULTITETHER_MESSAGE(kRndisMaxTransferTooSmall, "the device reports MaxTransferSize={}, too small for the {}-byte RNDIS + "
+                  "Ethernet headers")
+MULTITETHER_MESSAGE(kRndisMaxTransferClampedToHost, "the device reports MaxTransferSize={}, above the host buffer ceiling of {}; "
+                  "using the host ceiling")
+MULTITETHER_MESSAGE(kRndisMtuLoweredForTransferSize, "the device's MaxTransferSize={} is below the {} needed for a full frame; "
+                  "lowering the MTU from {} to {}")
+MULTITETHER_MESSAGE(kRndisExpectedIndicateStatus, "expected REMOTE_NDIS_INDICATE_STATUS_MSG, got {:#010x}")
+MULTITETHER_MESSAGE(kRndisOidCounterBadLength, "the OID counter returned {} bytes, which is neither 4 nor 8")
+MULTITETHER_MESSAGE(kRndisIndicateStatusBufferOutOfBounds, "the StatusBufferOffset={} / Length={} of INDICATE_STATUS is out of bounds under "
+                  "both base-point interpretations (MessageLength={}); ignoring the status buffer")
+MULTITETHER_MESSAGE(kRndisStateTransition, "RNDIS state: {} -> {}")
+MULTITETHER_MESSAGE(kRndisControlMessageReceived, "control channel received {} ({:#010x}), {} bytes")
+MULTITETHER_MESSAGE(kRndisCondisMessageReceived, "the device sent the connection-oriented (CONDIS) message {}; this driver only "
+                  "supports connectionless 802.3 devices")
+MULTITETHER_MESSAGE(kRndisDiscardUnexpectedMessage, "discarding an unexpected control message {} ({:#010x})")
+MULTITETHER_MESSAGE(kRndisNotificationReceived, "received a RESPONSE_AVAILABLE notification")
+MULTITETHER_MESSAGE(kRndisWaitReplyTimeout, "timed out waiting for {} ({} polls x {} ms)")
+MULTITETHER_MESSAGE(kRndisIndicateStatusParseFailed, "failed to parse INDICATE_STATUS: {}")
+MULTITETHER_MESSAGE(kRndisDeviceIndicatedWithDiagnostics, "the device reported {} ({:#010x}); diagnostics: DiagStatus={:#010x}, error "
+                  "offset={}")
+MULTITETHER_MESSAGE(kRndisDeviceIndicated, "the device reported {} ({:#010x})")
+MULTITETHER_MESSAGE(kRndisKeepAliveMsgTooShort, "the KEEPALIVE_MSG from the device is shorter than 12 bytes")
+MULTITETHER_MESSAGE(kRndisDeviceKeepAlive, "the device initiated a keep-alive (RequestId={}); replying with KEEPALIVE_CMPLT")
+MULTITETHER_MESSAGE(kRndisOptionalOidQueryFailed, "failed to query optional OID {} (not fatal): {}")
+MULTITETHER_MESSAGE(kRndisOidQueryFailed, "failed to query OID {}")
+MULTITETHER_MESSAGE(kRndisOptionalOidUnsupported, "the device does not support optional OID {} ({})")
+MULTITETHER_MESSAGE(kRndisOidQueryRejected, "query of OID {} was rejected: {}")
+MULTITETHER_MESSAGE(kRndisOidSetRejected, "setting OID {} = {:#x} was rejected: {}")
+MULTITETHER_MESSAGE(kRndisOidSet, "set OID {} = {:#x}")
+MULTITETHER_MESSAGE(kRndisPermanentMac, "device permanent MAC: {}")
+MULTITETHER_MESSAGE(kRndisMtuLoweredToDeviceFrameSize, "the device reports a maximum frame size of {}, below the negotiated MTU of {}; "
+                  "lowering the MTU")
+MULTITETHER_MESSAGE(kRndisDeviceInfo, "device info: MAC {}, link {:.0f} Mbps, max frame {}, medium {}, vendor {:#x} "
+                  "\"{}\"")
+MULTITETHER_MESSAGE(kRndisStartWrongState, "Start() may only be called from the uninitialized state; the current state is "
+                  "\"{}\"")
+MULTITETHER_MESSAGE(kRndisInitFailed, "RNDIS initialization failed")
+MULTITETHER_MESSAGE(kRndisMaxPacketsClamped, "the device reports MaxPacketsPerMessage={}; clamping to {} as the caller "
+                  "requested")
+MULTITETHER_MESSAGE(kRndisNegotiated, "RNDIS negotiation complete: version {}.{}, MTU {}, device aggregation limit {} "
+                  "bytes / {} packets, TX alignment {} bytes")
+MULTITETHER_MESSAGE(kRndisPacketFilterFailed, "failed to set the packet filter; the data channel cannot be opened")
+MULTITETHER_MESSAGE(kRndisDrainControlFailed, "failed to drain unsolicited control-channel messages")
+MULTITETHER_MESSAGE(kRndisKeepAliveFailed, "keep-alive failed ({} consecutive of {}): {}")
+MULTITETHER_MESSAGE(kRndisKeepAliveDeadLink, "{} consecutive keep-alive failures; treating the link as dead")
+MULTITETHER_MESSAGE(kRndisKeepAliveRejected, "the device's KEEPALIVE_CMPLT returned {}; attempting a soft reset")
+MULTITETHER_MESSAGE(kRndisKeepAliveOk, "keep-alive OK")
+MULTITETHER_MESSAGE(kRndisResetStarted, "starting an RNDIS soft reset")
+MULTITETHER_MESSAGE(kRndisResetRejected, "the soft reset was rejected: {}")
+MULTITETHER_MESSAGE(kRndisResetDone, "soft reset complete; addressing information {}")
+MULTITETHER_MESSAGE(kRndisAddressingLost, "was lost and must be replayed")
+MULTITETHER_MESSAGE(kRndisAddressingKept, "is still valid")
+MULTITETHER_MESSAGE(kRndisPacketFilterReplayed, "replayed the packet filter setting {:#x}")
+MULTITETHER_MESSAGE(kRndisEncodeHaltFailed, "failed to encode HALT_MSG: {}")
+MULTITETHER_MESSAGE(kRndisSendHaltFailed, "failed to send HALT_MSG (the device may already be disconnected): {}")
+MULTITETHER_MESSAGE(kRndisHaltSent, "sent HALT_MSG")
+MULTITETHER_MESSAGE(kRndisClearPacketFilterFailed, "failed to clear the packet filter (sending HALT anyway): {}")
+MULTITETHER_MESSAGE(kUsbInitFailed, "libusb_init failed")
+MULTITETHER_MESSAGE(kUsbInitialized, "libusb initialized: {} (hotplug {})")
+MULTITETHER_MESSAGE(kUsbHotplugSupported, "supported")
+MULTITETHER_MESSAGE(kUsbHotplugUnsupported, "unsupported")
+MULTITETHER_MESSAGE(kUsbContextReleased, "released the libusb context")
+MULTITETHER_MESSAGE(kUsbUnknownVersion, "unknown version")
+MULTITETHER_MESSAGE(kUsbEventThreadStarted, "libusb event thread started")
+MULTITETHER_MESSAGE(kUsbEventLoopNoDevice, "the libusb event loop got NO_DEVICE; continuing to wait")
+MULTITETHER_MESSAGE(kUsbHandleEventsFailed, "libusb_handle_events returned {} ({}); the event thread is exiting")
+MULTITETHER_MESSAGE(kUsbEventThreadExited, "libusb event thread exited")
+MULTITETHER_MESSAGE(kUsbGetDeviceListFailed, "libusb_get_device_list failed")
+MULTITETHER_MESSAGE(kUsbSkippedAcmModem, "{:04x}:{:04x} interface {} looks like RNDIS by signature but carries non-zero "
+                  "ACM bmCapabilities; treating it as a real cdc-acm modem and skipping it")
+MULTITETHER_MESSAGE(kUsbNoPairedDataInterface, "interface {1} of {0} is an RNDIS control interface but has no matching data "
+                  "interface; skipping it")
+MULTITETHER_MESSAGE(kUsbDeviceFound, "found RNDIS device {}: control interface {}, data interface {}, signature "
+                  "{:02x}/{:02x}/{:02x}{}")
+MULTITETHER_MESSAGE(kUsbViaAndroidQuirk, " (matched via the Android quirk fallback)")
+MULTITETHER_MESSAGE(kUsbDeviceGone, "device {} is no longer on the bus")
+MULTITETHER_MESSAGE(kUsbOpenFailed, "failed to open device {}")
+MULTITETHER_MESSAGE(kUsbClaimFailed, "failed to claim {} (interface {})")
+MULTITETHER_MESSAGE(kUsbClaimBusyHint, "the interface is held by a kernel driver. macOS has no RNDIS driver of its own, "
+                  "so this usually means a third-party kext such as HoRNDIS is installed, or "
+                  "another user-space program already claimed the interface")
+MULTITETHER_MESSAGE(kUsbClaimNotFoundHint, "the interface does not exist. The device may have switched configuration, or "
+                  "the descriptors were parsed incorrectly")
+MULTITETHER_MESSAGE(kUsbControlInterface, "the RNDIS control interface")
+MULTITETHER_MESSAGE(kUsbDataInterface, "the RNDIS data interface")
+MULTITETHER_MESSAGE(kUsbReadActiveConfigFailed, "failed to read the active configuration descriptor")
+MULTITETHER_MESSAGE(kUsbClaimed, "claimed {} ({}): bulk IN 0x{:02x} / OUT 0x{:02x} (wMaxPacketSize {}), "
+                  "interrupt IN {}")
+MULTITETHER_MESSAGE(kUsbNoInterruptEndpointShort, "none (falling back to polling the control endpoint)")
+MULTITETHER_MESSAGE(kUsbClosed, "closed device {}")
+MULTITETHER_MESSAGE(kUsbBulkEndpointsMissing, "no matching pair of bulk endpoints on data interface {} (IN=0x{:02x}, "
+                  "OUT=0x{:02x})")
+MULTITETHER_MESSAGE(kUsbBulkMaxPacketSizeZero, "the bulk endpoint has wMaxPacketSize 0")
+MULTITETHER_MESSAGE(kUsbUnknownSpeed, "unknown speed")
+MULTITETHER_MESSAGE(kUsbClearHaltFailed, "failed to clear the halt condition on endpoint 0x{:02x}")
+MULTITETHER_MESSAGE(kUsbNoInterruptEndpoint, "the device has no interrupt endpoint; skipping the notification listener and "
+                  "falling back to polling the control endpoint")
+MULTITETHER_MESSAGE(kUsbNotificationAlreadyRunning, "the notification listener is already running")
+MULTITETHER_MESSAGE(kUsbAllocInterruptTransferFailed, "failed to allocate a libusb transfer for interrupt notifications")
+MULTITETHER_MESSAGE(kUsbSubmitInterruptFailed, "failed to submit the interrupt notification transfer")
+MULTITETHER_MESSAGE(kUsbNotificationStarted, "interrupt notification listener started (endpoint 0x{:02x})")
+MULTITETHER_MESSAGE(kUsbCancelInterruptReturned, "cancelling the interrupt notification transfer returned {}")
+MULTITETHER_MESSAGE(kUsbInterruptReclaimTimeout, "timed out waiting for the interrupt notification transfer to be reclaimed; "
+                  "leaving it allocated to avoid a use-after-free")
+MULTITETHER_MESSAGE(kUsbUnknownNotification, "the interrupt endpoint received an unknown notification {:#010x}; ignoring it")
+MULTITETHER_MESSAGE(kUsbInterruptHaltClearFailed, "failed to clear the halt on the interrupt endpoint; falling back to polling the "
+                  "control endpoint: {}")
+MULTITETHER_MESSAGE(kUsbInterruptTransferStatus, "interrupt notification transfer status={}; continuing to listen")
+MULTITETHER_MESSAGE(kUsbControlMessageLengthInvalid, "invalid control message length {}")
+MULTITETHER_MESSAGE(kUsbSendEncapsulatedFailed, "SEND_ENCAPSULATED_COMMAND failed")
+MULTITETHER_MESSAGE(kUsbSendEncapsulatedShort, "SEND_ENCAPSULATED_COMMAND only sent {} of {} bytes")
+MULTITETHER_MESSAGE(kUsbGetEncapsulatedFailed, "GET_ENCAPSULATED_RESPONSE failed")
+MULTITETHER_MESSAGE(kUsbTxBufferTooSmall, "the {}-byte TX transfer buffer cannot hold a full frame ({} bytes needed)")
+MULTITETHER_MESSAGE(kUsbTxSlotQueueInitFailed, "failed to initialize the TX free-slot queue")
+MULTITETHER_MESSAGE(kUsbDataChannelReady, "data channel ready: RX {} x {} KiB ({} KiB in flight), TX {} x {} KiB; device "
+                  "aggregation limit {} bytes / {} packets, alignment {} bytes")
+MULTITETHER_MESSAGE(kUsbTransferAllocFailed, "failed to allocate {} bytes ({}-byte aligned) for a USB transfer")
+MULTITETHER_MESSAGE(kUsbAllocTransferFailed, "libusb_alloc_transfer failed")
+MULTITETHER_MESSAGE(kUsbBulkInSubmitted, "submitted {} bulk IN transfers")
+MULTITETHER_MESSAGE(kUsbSubmitBulkInFailed, "failed to submit a bulk IN transfer")
+MULTITETHER_MESSAGE(kUsbMalformedRndisMessage, "malformed RNDIS message in a bulk IN transfer: {} ({} frames decoded so far)")
+MULTITETHER_MESSAGE(kUsbBulkInStall, "bulk IN endpoint STALL; clearing the halt and continuing")
+MULTITETHER_MESSAGE(kUsbBulkInClearHaltFailed, "failed to clear the halt on bulk IN: {}")
+MULTITETHER_MESSAGE(kUsbBulkInDeviceGone, "a bulk IN transfer reported that the device is disconnected")
+MULTITETHER_MESSAGE(kUsbBulkInFailed, "bulk IN transfer failed: status={}; retrying")
+MULTITETHER_MESSAGE(kUsbBulkInResubmitFailed, "failed to resubmit a bulk IN transfer: {}")
+MULTITETHER_MESSAGE(kUsbDataChannelShuttingDown, "the data channel is shutting down; refusing to send")
+MULTITETHER_MESSAGE(kUsbReturnTxSlotFailed, "failed to return TX slot {} (this should not happen)")
+MULTITETHER_MESSAGE(kUsbSubmitBulkOutFailed, "failed to submit a bulk OUT transfer")
+MULTITETHER_MESSAGE(kUsbBulkOutSubmitted, "bulk OUT submitted {} frames / {} payload bytes / {} transfer bytes")
+MULTITETHER_MESSAGE(kUsbBulkOutStall, "bulk OUT endpoint STALL; clearing the halt")
+MULTITETHER_MESSAGE(kUsbBulkOutClearHaltFailed, "failed to clear the halt on bulk OUT: {}")
+MULTITETHER_MESSAGE(kUsbBulkOutFailed, "bulk OUT transfer failed: status={}")
+MULTITETHER_MESSAGE(kUsbCancelBulkInReturned, "cancelling a bulk IN transfer returned {}")
+MULTITETHER_MESSAGE(kUsbCancelBulkOutReturned, "cancelling a bulk OUT transfer returned {}")
+MULTITETHER_MESSAGE(kUsbTransferReclaimTimeout, "timed out waiting for {} in-flight USB transfers to be reclaimed. Their memory "
+                  "is deliberately not freed to avoid a use-after-free (leaking about {} KiB). "
+                  "This usually means the device is in a bad state, or the libusb event thread has "
+                  "stopped.")
+MULTITETHER_MESSAGE(kUsbDataChannelStopped, "data channel stopped")
+MULTITETHER_MESSAGE(kCoreBridgeAlreadyRunning, "the bridge is already running")
+MULTITETHER_MESSAGE(kCoreDataPathStarted, "data path started: RX queue {} frames ({} KiB), RX write batch {} frames, TX "
+                  "submit batch {} frames, link batch write {}")
+MULTITETHER_MESSAGE(kCoreBatchWriteAvailable, "available")
+MULTITETHER_MESSAGE(kCoreBatchWriteUnavailable, "unavailable (writing one frame at a time)")
+MULTITETHER_MESSAGE(kCoreDataPathStopped, "data path stopped")
+MULTITETHER_MESSAGE(kCoreRxInjectorStarted, "RX injector thread started")
+MULTITETHER_MESSAGE(kCoreRxInjectorExited, "RX injector thread exited")
+MULTITETHER_MESSAGE(kCoreLinkWriteFailed, "failed to write {} frames to the link: {}")
+MULTITETHER_MESSAGE(kCoreTxExtractorStarted, "TX extractor thread started")
+MULTITETHER_MESSAGE(kCoreTxExtractorExited, "TX extractor thread exited")
+MULTITETHER_MESSAGE(kCoreLinkReadFailed, "failed to read from the link: {}")
+MULTITETHER_MESSAGE(kCoreUsbSubmitFailed, "failed to submit {} frames to USB: {}")
+MULTITETHER_MESSAGE(kCoreStatsLine, "RX {:>8.0f} pps / {:>8.2f} Mbps (dropped {})  |  "
+                  "TX {:>8.0f} pps / {:>8.2f} Mbps (dropped {})  |  "
+                  "queue depth {}  kernel drops {}  backpressure {}")
+MULTITETHER_MESSAGE(kCoreRuntimeAlreadyStarted, "the runtime is already started")
+MULTITETHER_MESSAGE(kCoreNeedsRoot, "MultiTether needs root privileges to create the feth virtual interface and open /dev/bpf*.")
+MULTITETHER_MESSAGE(kCoreNoDeviceFound, "No RNDIS device found. Check that:\n"
+                  "  1. the device is connected with a USB data cable (not a charge-only one);\n"
+                  "  2. \"USB tethering\" is enabled on the device;\n"
+                  "  3. the phone is unlocked and trusts this Mac (some devices hide the RNDIS "
+                  "interface while locked).\n"
+                  "  Run `system_profiler SPUSBDataType` to confirm the system sees the device.")
+MULTITETHER_MESSAGE(kCoreMultipleDevices, "found {} RNDIS devices; using the first one (use VID/PID to pick another)")
+MULTITETHER_MESSAGE(kCoreExitingOnFatal, "exiting because of an unrecoverable error")
+MULTITETHER_MESSAGE(kCoreStopping, "stopping...")
+MULTITETHER_MESSAGE(kCoreStopped, "stopped")
+MULTITETHER_MESSAGE(kCoreRndisReady, "RNDIS ready: device MAC {}, MTU {}, link {:.0f} Mbps")
+MULTITETHER_MESSAGE(kCoreLinkState, "link state: {}")
+MULTITETHER_MESSAGE(kCoreLinkConnected, "connected")
+MULTITETHER_MESSAGE(kCoreLinkDisconnected, "disconnected")
+MULTITETHER_MESSAGE(kCoreDeviceReset, "the device performed a soft reset (addressing information {})")
+MULTITETHER_MESSAGE(kCoreAddressingLost, "was lost and has been replayed")
+MULTITETHER_MESSAGE(kCoreAddressingKept, "was preserved")
+MULTITETHER_MESSAGE(kCoreLinkUnrecoverable, "the link is unrecoverable")
+MULTITETHER_MESSAGE(kCapiSessionConfigNull, "tk_session_create: config must not be null")
+MULTITETHER_MESSAGE(kCapiSessionOutOfMemory, "out of memory; cannot create the session")
+MULTITETHER_MESSAGE(kCapiCleanupNeedsRoot, "cleaning up leftover virtual interfaces requires root")
+MULTITETHER_MESSAGE(kCapiOrphanAlreadyGone, "leftover interface {} is already gone, or cannot be destroyed")
+MULTITETHER_MESSAGE(kCapiInterfaceNameNull, "the interface name must not be empty")
+MULTITETHER_MESSAGE(kCapiInterfaceNotOurs, "refusing to touch interface \"{}\": only feth<number> interfaces created by "
+                  "MultiTether are accepted.\n"
+                  "  This guard exists so a mistake cannot wipe the configuration of a real "
+                  "interface such as en0.")

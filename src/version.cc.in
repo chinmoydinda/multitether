@@ -1,0 +1,11 @@
+#include "multitether/version.h"
+
+namespace multitether {
+Version GetVersion() noexcept {
+  return Version{@PROJECT_VERSION_MAJOR@, @PROJECT_VERSION_MINOR@, @PROJECT_VERSION_PATCH@};
+}
+
+std::string_view GetVersionString() noexcept {
+  return "MultiTether @PROJECT_VERSION@ (C++@CMAKE_CXX_STANDARD@, macOS @MULTITETHER_MIN_MACOS_VERSION@+)";
+}
+}  // namespace multitether
