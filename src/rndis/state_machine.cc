@@ -551,16 +551,17 @@ void StateMachine::Stop() {
   }
   TransitionTo(State::kHalting);
 
-  if (active_packet_filter_ != 0) {
-    if (const auto status = SetOidUint32(Oid::kGenCurrentPacketFilter, 0); !status) {
-      MULTITETHER_DEBUG_TR(Msg::kRndisClearPacketFilterFailed, status.error().ToString());
-    } else {
-      active_packet_filter_ = 0;
-    }
-  }
-
   if (config_.send_halt_on_stop) {
+    if (active_packet_filter_ != 0) {
+      if (const auto status = SetOidUint32(Oid::kGenCurrentPacketFilter, 0); !status) {
+        MULTITETHER_DEBUG_TR(Msg::kRndisClearPacketFilterFailed, status.error().ToString());
+      } else {
+        active_packet_filter_ = 0;
+      }
+    }
     SendHalt();
+  } else {
+    active_packet_filter_ = 0;
   }
   TransitionTo(State::kUninitialized);
 }

@@ -87,8 +87,6 @@ class Device {
 
   [[nodiscard]] Status ClearHalt(std::uint8_t endpoint);
 
-  void ResetDataEndpoints() noexcept;
-
  private:
   Device() = default;
 

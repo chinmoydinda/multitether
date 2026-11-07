@@ -358,7 +358,6 @@ void UsbDataChannel::OnSendComplete(Slot& slot) noexcept {
     case LIBUSB_TRANSFER_TIMED_OUT:
       async_send_errors_.fetch_add(1, std::memory_order_relaxed);
       MULTITETHER_WARN_TR(Msg::kUsbBulkOutFailed, static_cast<int>(slot.transfer->status));
-      device_->ResetDataEndpoints();
       break;
 
     default:

@@ -203,18 +203,6 @@ void Runtime::Teardown() {
   MULTITETHER_INFO_TR(Msg::kCoreStopping);
 
   if (bridge_ != nullptr) {
-    bridge_->SetPaused(true);
-  }
-
-  // Clear the RNDIS packet filter and halt the state machine while the USB bulk
-  // pipes are still open so the phone's gadget driver stops DMA cleanly before
-  // host transfers are aborted.
-  if (state_machine_ != nullptr) {
-    state_machine_->Stop();
-    state_machine_.reset();
-  }
-
-  if (bridge_ != nullptr) {
     bridge_->Stop();
     bridge_.reset();
   }
@@ -223,6 +211,11 @@ void Runtime::Teardown() {
   bpf_link_.reset();
 
   feth_pair_.reset();
+
+  if (state_machine_ != nullptr) {
+    state_machine_->Stop();
+    state_machine_.reset();
+  }
 
   if (control_channel_ != nullptr) {
     control_channel_->StopNotificationListener();
