@@ -87,8 +87,7 @@ sed "s/__MULTITETHER_VERSION__/${VERSION}/g" \
 log "Building Finder icon representations"
 xcrun swift -sdk "${SDK_PATH}" -module-cache-path "${CLANG_MODULE_CACHE_PATH}" \
   "${SCRIPT_DIR}/build-icon.swift" "${GUI_DIR}/Resources/MultiTetherIcon.png" \
-  "${GUI_DIR}/Resources/MultiTetherIcon.icns"
-cp "${GUI_DIR}/Resources/MultiTetherIcon.icns" "${GUI_DIR}/Resources/MenuBarIcon.pdf" "${APP_DIR}/Contents/Resources/"
+  "${APP_DIR}/Contents/Resources/MultiTetherIcon.icns"
 cp "${REPO_ROOT}/LICENSE" "${APP_DIR}/Contents/Resources/ThirdParty-LICENSE.txt"
 cp "${GUI_DIR}/Resources/libusb-COPYING.txt" "${APP_DIR}/Contents/Resources/"
 
